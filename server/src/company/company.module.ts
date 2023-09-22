@@ -1,10 +1,14 @@
 import { Module } from '@nestjs/common';
 import { CompanyController } from './company.controller';
 import { CompanyService } from './company.service';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { Company, CompanySchema } from './schema/company.model';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
+  imports: [
+    MongooseModule.forFeature([{ name: Company.name, schema: CompanySchema }]),
+  ],
   controllers: [CompanyController],
-  providers: [CompanyService, PrismaService],
+  providers: [CompanyService],
 })
 export class CompanyModule {}
