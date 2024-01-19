@@ -1,11 +1,23 @@
 const express = require("express");
+const mongoose = require("mongoose");
+const authRoute = require("./routes/auth.js");
+const dotenv = require("dotenv");
+const cors = require("cors");
 const app = express();
-const port = 8000;
 
-app.get("/", (req, res) => {
-  res.send("Hello, World!");
-});
+dotenv.config();
+app.use(cors());
+app.use(express.json());
 
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
+app.use("/auth", authRoute);
+
+const PORT = process.env.PORT || 3000;
+
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => {
+    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+  })
+  .catch((error) =>
+    console.error(`Error connecting to MongoDB: ${error.message}`)
+  );
