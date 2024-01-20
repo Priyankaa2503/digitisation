@@ -8,7 +8,7 @@ const fileSchema = new mongoose.Schema(
     },
     description: String,
     company: { type: mongoose.Schema.Types.ObjectId, ref: "Company" },
-    department: { type: mongoose.Schema.Types.ObjectId, ref: "Department" },
+    // department: { type: mongoose.Schema.Types.ObjectId, ref: "Department" },
     storageSize: {
       type: Number,
       required: true,
