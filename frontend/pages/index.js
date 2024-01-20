@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <div className="h-screen font-pops w-screen bg-[#212332] flex justify-center items-center overflow-hidden">
       <Sidebar active={active} setActive={setActive} />
-      <MainLayout>{getActiveState()}</MainLayout>
+      <MainLayout active={active}>{getActiveState()}</MainLayout>
     </div>
   );
 }
