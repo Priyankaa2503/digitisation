@@ -23,7 +23,6 @@ const companySchema = new mongoose.Schema(
       country: String,
       postalCode: String,
     },
-    // departments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Department" }],
     files: [{ type: mongoose.Schema.Types.ObjectId, ref: "File" }],
     owner: {
       name: String,

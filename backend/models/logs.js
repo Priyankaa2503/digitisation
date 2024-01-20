@@ -4,7 +4,7 @@ const logSchema = new mongoose.Schema(
   {
     type: {
       type: String,
-      enum: ["login", "logout", "create", "update", "delete"],
+      enum: ["register", "login", "logout", "create", "update", "delete_req"],
       required: true,
     },
     company: {

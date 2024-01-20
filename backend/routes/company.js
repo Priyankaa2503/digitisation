@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Company = require("../models/company.js");
 const cryptojs = require("crypto-js");
 const jwt = require("jsonwebtoken");
+const recordLog = require("../utils/logs");
 
 router.post("/register", async (req, res) => {
   const emailExists = await Company.findOne({ email: req.body.email });
@@ -34,6 +35,11 @@ router.post("/register", async (req, res) => {
   });
   try {
     const savedCompany = await newCompany.save();
+    try {
+      await recordLog("register", newCompany._id);
+    } catch (error) {
+      return res.status(500).json({ error: "Failed to record login" });
+    }
     res.status(200).json(savedCompany);
   } catch (error) {
     res.status(500).json(error);
@@ -53,6 +59,11 @@ router.post("/login", async (req, res) => {
     return res.status(400).json({ error: "Invalid password" });
   }
   const token = jwt.sign({ _id: company._id }, process.env.TOKEN_SECRET);
+  try {
+    await recordLog("login", company._id);
+  } catch (error) {
+    return res.status(500).json({ error: "Failed to record login" });
+  }
   return res.status(200).json({ company, token });
 });
 
