@@ -9,22 +9,31 @@ const NavBarLink = ({
   isActive,
   setActive,
 }) => {
+  const [isHovered, setIsHovered] = useState(false);
   return (
     <div
       className={`w-full ${
         isActive ? "text-white bg-[#2697FF]" : "text-[#AAABB2]"
-      } hover:text-white transition-all duration-200 text-xs hover:bg-[#2697FF] cursor-pointer font-light flex gap-2 h-10  ${
+      } animate-fade-right animate-delay-[0.5s] text-xs 
+      ${isHovered && !isActive ? "text-white bg-[#66B6FF]" : ""}
+      cursor-pointer flex gap-2 h-10  ${
         isOpened ? "px-3 justify-start" : "px-0 justify-center"
-      } transition-all duration-200 rounded-lg items-center`}
+      } transition-all duration-500 rounded-lg items-center`}
       onClick={() => {
         setActive(icon_name);
+      }}
+      onMouseEnter={() => {
+        setIsHovered(true);
+      }}
+      onMouseLeave={() => {
+        setIsHovered(false);
       }}
     >
       <div className="h-5 w-5 flex justify-center items-center">
         <Icon src={icon_name} alt={icon_name} className="w-4 h-4" />
       </div>
       {isOpened && (
-        <div className="animate-fade animate-once" key={id}>
+        <div className="animate-fade animate-duration-[0.5s]" key={id}>
           {title}
         </div>
       )}
@@ -40,9 +49,9 @@ const Sidebar = ({ active, setActive }) => {
   };
   return (
     <div
-      className={`fixed top-0 left-0 h-full flex ${
-        isOpened ? "w-56 py-3 px-2" : "w-12 p-3"
-      } flex-col justify-between animate-fade-right animate-once items-center transition-all duration-200 bg-[#2a2d3e] shadow-lg`}
+      className={`fixed py-5 top-0 p-2 left-0 h-full flex ${
+        isOpened ? "w-56" : "w-12"
+      } flex-col justify-between animate-fade-right items-center transition-all duration-200 bg-[#2a2d3e] shadow-lg`}
       onMouseEnter={() => {
         setIsOpened(true);
         getRandomId();
@@ -59,7 +68,7 @@ const Sidebar = ({ active, setActive }) => {
         />
         {isOpened && (
           <div
-            className="flex tracking-wider h-full items-center justify-center font-semibold animate-fade animate-once flex-col"
+            className="flex tracking-wider h-full items-center justify-center font-semibold animate-fade animate-duration-[0.5s] flex-col"
             key={randomId}
           >
             <div>DIGITAL</div>
@@ -101,12 +110,19 @@ const Sidebar = ({ active, setActive }) => {
           setActive={setActive}
         />
       </div>
-      <div className="w-full text-[#AAABB2] text-xs cursor-pointer hover:text-white font-light flex gap-2 h-6 items-center">
+      <div
+        className={`w-full text-[#AAABB2] animate-fade-right animate-delay-[0.5s] text-xs cursor-pointer hover:text-white flex gap-2 h-6  ${
+          isOpened ? "px-3 justify-start" : "px-0 justify-center"
+        } items-center`}
+      >
         <div className="h-5 w-5 flex justify-center items-center">
           <Icon src="LogOut" alt="Log Out" className="w-4 h-4" />
         </div>
         {isOpened && (
-          <div className="animate-fade animate-once" key={randomId + 1}>
+          <div
+            className="animate-fade animate-duration-[0.5s]"
+            key={randomId + 1}
+          >
             LOG OUT
           </div>
         )}
